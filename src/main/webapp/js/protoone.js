@@ -3,12 +3,12 @@ var context = canvas.getContext("2d");
 var sprite_sheet = new Image();
 sprite_sheet.src = "images/testsheet.gif";
 sprite_sheet.onload = function() {
-    setInterval('draw_handler()', 80);
+    setInterval('draw_handler()', 75);
 };
 
 var walking_direction = 0;
 var char_x = 0;
-var char_y = 0;
+var char_y = -55;
 var char_animation_counter = 0;
 var punching = false;
 
@@ -19,21 +19,21 @@ function draw_handler() {
 
     if(walking_direction == 1) {
         char_x += 8;
-        drawWalking(char_animation_counter % 5,char_x,char_y)
+        drawWalking(char_animation_counter % 5,char_x % 768,char_y)
         char_animation_counter = char_animation_counter + 1
     } else if (walking_direction == -1) {
         char_x -= 8;
-        drawWalking(4-char_animation_counter % 5,char_x,char_y)
+        drawWalking(4-char_animation_counter % 5,char_x % 768,char_y)
         char_animation_counter = char_animation_counter + 1
     }
     else {
         if(punching != 0) {
-            drawPunching(char_animation_counter % 2,char_x,char_y,punching-1);
+            drawPunching(char_animation_counter % 2,char_x % 768,char_y,punching-1);
             char_animation_counter = char_animation_counter + 1;
             if(char_animation_counter > 1)
                 punching = 0;
         } else {
-            drawStanding(char_x,char_y)
+            drawStanding(char_x % 768,char_y)
         }
     }
 
@@ -43,10 +43,14 @@ function drawWalking(n,x,y) {
     var dwidth = 48
     var doffset = 64
     context.drawImage(sprite_sheet,n*dwidth+doffset,0,dwidth,170,x, y,dwidth,170);
+    context.drawImage(sprite_sheet,n*dwidth+doffset,0,dwidth,170,x-768, y,dwidth,170);
+    context.drawImage(sprite_sheet,n*dwidth+doffset,0,dwidth,170,x+768, y,dwidth,170);
 }
 
 function drawStanding(x,y) {
     context.drawImage(sprite_sheet,0,0,60,170,x, y,60,170);
+    context.drawImage(sprite_sheet,0,0,60,170,x-768, y,60,170);
+    context.drawImage(sprite_sheet,0,0,60,170,x+768, y,60,170);
 }
 
 function drawPunching(n,x,y,o) {
@@ -58,6 +62,8 @@ function drawPunching(n,x,y,o) {
    // 4/2 -> 30
    var doffset = 12 + o/2*4
    context.drawImage(sprite_sheet,(n+o)*dwidth+doffset,dheight,dwidth+(n%2)*(6+o*2),170,x, y+4,dwidth+(n%2)*(6+o*2),170);
+   context.drawImage(sprite_sheet,(n+o)*dwidth+doffset,dheight,dwidth+(n%2)*(6+o*2),170,x-768, y+4,dwidth+(n%2)*(6+o*2),170);
+   context.drawImage(sprite_sheet,(n+o)*dwidth+doffset,dheight,dwidth+(n%2)*(6+o*2),170,x+768, y+4,dwidth+(n%2)*(6+o*2),170);
 }
 
 $(document).keydown(function(e){
