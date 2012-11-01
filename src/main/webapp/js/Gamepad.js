@@ -56,7 +56,8 @@ var gamepadSupport = {
     if (!gamepadSupportAvailable) {
       // It doesn’t seem Gamepad API is available – show a message telling
       // the visitor about it.
-      tester.showNotSupported();
+      // TODO: do something about it
+      //tester.showNotSupported();
     } else {
       // Firefox supports the connect/disconnect event, so we attach event
       // handlers to those.

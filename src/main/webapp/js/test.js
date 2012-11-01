@@ -77,9 +77,6 @@ switch(e.keyCode) {
     case 83:
         my_fighter.duck();
         break;
-    default:
-        //alert(e.keyCode);
-        break;
 }
 });
 
@@ -151,6 +148,11 @@ function checkGamePad() {
 }
 
 function game_handler() {
+
+    requestAnimFrame(function() {
+              game_handler();
+    });
+
     // TODO: proper animatino frame loop
     checkGamePad();
 
@@ -166,8 +168,4 @@ function game_handler() {
     for(var i = 0; i < fireballs.length; i++ ) {
         fireballs[i].render(game_context)
     }
-
-    requestAnimFrame(function() {
-              game_handler();
-    });
 }
