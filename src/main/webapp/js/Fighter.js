@@ -1,6 +1,7 @@
-function Fighter (name,fighter_def) {
+function Fighter (name,fighter_def,ylock) {
     this.name = name;
     this.fighter_def = fighter_def;
+    this.ylock = ylock;
 
     this.x = 0;
     this.y = 0;
@@ -25,6 +26,7 @@ function Fighter (name,fighter_def) {
         if(this.currentAction.isFinished()) {
             this.currentAction = this.defaultAction;
             this.currentAction.reset();
+            this.y = ylock;
         }
 
         // draw
@@ -100,7 +102,12 @@ function Fighter (name,fighter_def) {
         if(this.currentAction != this.fighter_def.special1 && !this.currentAction.locking){
             this.currentAction = this.fighter_def.special1;
             this.currentAction.reset();
+
+            if(this.fighter_def == ryu){
+                fireballs.push(new Fireball(sheet_fireball,this.x+175,this.y+100,200,0))
+            }
         }
+
     }
 
     this.special2 = function() {

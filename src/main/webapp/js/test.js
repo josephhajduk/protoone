@@ -5,10 +5,12 @@ sheet_ryu_idle.image_sheet.onload = function() {
                                       setInterval('draw_handler()', 75);
                                   };
 
-var my_fighter = new Fighter("ryu",ryu);
+var my_fighter = new Fighter("ryu",ryu,150);
 my_fighter.y = 150;
 
 var moving = 0;
+
+var fireballs = [];
 
 $(document).keydown(function(e){
 switch(e.keyCode) {
@@ -90,4 +92,9 @@ function draw_handler() {
 
     my_fighter.render(game_canvas,game_context)
 
+    for(var i = 0; i < fireballs.length; i++ ) {
+        fireballs[i].render(game_context)
+    }
+
+    //TODO: clean up fireballs
 }

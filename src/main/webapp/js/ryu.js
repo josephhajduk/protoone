@@ -17,6 +17,8 @@ var sheet_ryu_heavy_kick = new SpriteSheet("ryu_roundhouse_kick","images/ryu_rou
 var sheet_ryu_shoryuken = new SpriteSheet("ryu_shoryuken","images/ryu_shoryuken.png",384,224,14)
 var sheet_ryu_hadoken = new SpriteSheet("ryu_hadoken","images/ryu_hadoken.png",384,224,12)
 
+var sheet_fireball = new SpriteSheet("fireball","images/hadoken2.png",84,50,2);
+
 var ryu = {
     idle : new Action("ryu_idle",
         new Animation("ryu_idle",simple_tdata(10,65),sheet_ryu_idle),
@@ -77,13 +79,13 @@ var ryu = {
     light_punch : new Action("ryu_light_punch",
         new Animation("ryu_light_punch",simple_tdata(4,50),sheet_ryu_light_punch),
         simple_tdata(4,[0,0]),
-        true
+        false
     ),
 
     medium_punch : new Action("ryu_medium_punch",
         new Animation("ryu_medium_punch",simple_tdata(8,50),sheet_ryu_medium_punch),
         simple_tdata(8,[0,0]),
-        true
+        false
     ),
 
     heavy_punch : new Action("ryu_heavy_punch",
@@ -95,13 +97,13 @@ var ryu = {
     light_kick : new Action("ryu_light_kick",
         new Animation("ryu_light_kick",simple_tdata(7,50),sheet_ryu_light_kick),
         simple_tdata(7,[0,0]),
-        true
+        false
     ),
 
     medium_kick : new Action("ryu_medium_kick",
         new Animation("ryu_medium_kick",simple_tdata(6,50),sheet_ryu_medium_kick),
         simple_tdata(6,[0,0]),
-        true
+        false
     ),
 
     heavy_kick : new Action("ryu_heavy_kick",
