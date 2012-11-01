@@ -16,7 +16,7 @@ function Animation (name, time_data, sprite_sheet) {
         sum = 0
         for (var i = 0; i < this.time_data.length; i++) {
           sum += this.time_data[i];
-          if(sum > now - start_time) {
+          if(sum >= now - start_time) {
             this.sprite_sheet.draw(context,x,y,i)
             return true;
           }

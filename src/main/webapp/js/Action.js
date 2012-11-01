@@ -29,7 +29,7 @@ function Action (name, animation , movement_data, locking) {
     }
 
     this.render = function(context,x,y) {
-        this.animation.draw(context,x,y,this.start_time,new Date().getTime());
+        return this.animation.draw(context,x,y,this.start_time,new Date().getTime());
     }
 
     this.isFinished = function() {

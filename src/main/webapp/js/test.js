@@ -1,8 +1,19 @@
 var game_canvas = document.getElementById("main");
 var game_context = game_canvas.getContext("2d");
 
-sheet_ryu_idle.image_sheet.onload = function() {
-                                      setInterval('draw_handler()', 75);
+var requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+
+sheet_fireball.image_sheet.onload = function() {
+                                      game_handler();
                                   };
 
 var my_fighter = new Fighter("ryu",ryu,150);
@@ -96,48 +107,50 @@ var ANALOG_BUTTON_THRESHOLD = .5;
 function checkGamePad() {
     var gamepad = gamepadSupport.gamepads[0];
 
-    if (gamepad.buttons[2] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.light_punch();
-    else if (gamepad.buttons[3] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.medium_punch();
-    else if (gamepad.buttons[5] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.heavy_punch();
+    if(gamepad) {
+        if (gamepad.buttons[2] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.light_punch();
+        else if (gamepad.buttons[3] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.medium_punch();
+        else if (gamepad.buttons[5] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.heavy_punch();
 
-    else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.light_kick();
-    else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.medium_kick();
-    else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.heavy_kick();
+        else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.light_kick();
+        else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.medium_kick();
+        else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.heavy_kick();
 
-    else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.special1();
-    else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD)
-        my_fighter.special2();
+        else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.special1();
+        else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD)
+            my_fighter.special2();
 
-    // crouching or standing or jumping
-    if (gamepad.axes[1] > 0.8)
-        my_fighter.duck();
-    else if (gamepad.axes[1] < -0.5) {
-        // TODO: proper jumping
-        if(gamepad.axes[0] > 0.5)
-            my_fighter.jump_forward();
-        else if(gamepad.axes[0] < -0.5)
-            my_fighter.jump_backward();
-        else
-            my_fighter.jump();
-    } else
-        my_fighter.stand();
+        // crouching or standing or jumping
+        if (gamepad.axes[1] > 0.8)
+            my_fighter.duck();
+        else if (gamepad.axes[1] < -0.5) {
+            // TODO: proper jumping
+            if(gamepad.axes[0] > 0.5)
+                my_fighter.jump_forward();
+            else if(gamepad.axes[0] < -0.5)
+                my_fighter.jump_backward();
+            else
+                my_fighter.jump();
+        } else
+            my_fighter.stand();
 
-    // move
-    if (gamepad.axes[0] > 0.8)
-        my_fighter.dash_forward();
-    else if (gamepad.axes[0] < -0.8)
-        my_fighter.dash_backward();
+        // move
+        if (gamepad.axes[0] > 0.8)
+            my_fighter.dash_forward();
+        else if (gamepad.axes[0] < -0.8)
+            my_fighter.dash_backward();
+     }
 
 }
 
-function draw_handler() {
+function game_handler() {
     // TODO: proper animatino frame loop
     checkGamePad();
 
@@ -145,11 +158,16 @@ function draw_handler() {
 
     my_fighter.x = my_fighter.x % game_canvas.width;
 
-    my_fighter.render(game_canvas,game_context)
+    var test_result = my_fighter.render(game_canvas,game_context)
+
+    //if(!test_result)
+    //    alert("NO")
 
     for(var i = 0; i < fireballs.length; i++ ) {
         fireballs[i].render(game_context)
     }
 
-    //TODO: clean up fireballs
+    requestAnimFrame(function() {
+              game_handler();
+    });
 }

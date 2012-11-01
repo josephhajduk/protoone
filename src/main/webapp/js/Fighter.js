@@ -30,10 +30,11 @@ function Fighter (name,fighter_def,ylock) {
         }
 
         // draw
-        this.currentAction.render(context,this.x,this.y)
+        var result = this.currentAction.render(context,this.x,this.y)
         this.currentAction.render(context,this.x-canvas.width,this.y)
         this.currentAction.render(context,this.x+canvas.width,this.y)
         this.lastRender = new Date().getTime();
+        return result;
     }
 
     // ACTIONS
