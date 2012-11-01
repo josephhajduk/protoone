@@ -6,7 +6,7 @@ sheet_ryu_idle.image_sheet.onload = function() {
                                   };
 
 var my_fighter = new Fighter("ryu",ryu);
-my_fighter.y = 160;
+my_fighter.y = 150;
 
 var moving = 0;
 
