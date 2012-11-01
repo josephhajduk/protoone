@@ -16,7 +16,6 @@ function draw_handler() {
     // clear canvas
     canvas.width = canvas.width;
 
-
     if(walking_direction == 1) {
         char_x += 8;
         drawWalking(char_animation_counter % 5,char_x % 768,char_y)
