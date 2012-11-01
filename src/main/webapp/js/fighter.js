@@ -30,24 +30,6 @@ function Fighter (name,skin,x,y) {
     }
 }
 
-function Animation (name, time_data, sprite_sheet) {
-    this.name = name;
-    this.time_data = time_data;
-    this.sprite_sheet = sprite_sheet
-    this.draw_frame = function(context, x, y, start_time, now) {
-        //TODO: figure out which frame to use
-        n = 0;
-        this.sprite_sheet.draw(context,x,y,n)
-    }
-
-    // TODO; figure out duration
-    this.duration = 3;
-
-    this.isFinishedAt = function(start_time,now) {
-        //TODO: see if
-        return false;
-    }
-}
 
 function Action (name, animation , movement_data) {
     this.name = name;

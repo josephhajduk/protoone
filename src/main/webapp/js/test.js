@@ -17,11 +17,16 @@ var sheet_ryu_roundhouse_kick = new SpriteSheet("ryu_roundhouse_kick","images/ry
 var sheet_ryu_shoryuken = new SpriteSheet("ryu_shoryuken","images/ryu_shoryuken.png",384,224,14)
 var sheet_ryu_hadoken = new SpriteSheet("ryu_hadoken","images/ryu_hadoken.png",384,224,12)
 
+var animation_ryu_hadoken = new Animation("ryu_hadoken",simple_tdata(12,60),sheet_ryu_hadoken)
+var animation_ryu_shoryuken = new Animation("ryu_shoryuken",simple_tdata(14,100),sheet_ryu_shoryuken)
+
 sheet_ryu_idle.image_sheet.onload = function() {
                                       setInterval('draw_handler()', 75);
                                   };
 
 var counter = 1;
+
+var animate_start = new Date().getTime();
 
 function draw_handler() {
     // clear canvas
@@ -41,6 +46,15 @@ function draw_handler() {
     sheet_ryu_light_kick.draw(context,-100,280,counter % 7)
     sheet_ryu_knee.draw(context,40,280,counter % 6)
     sheet_ryu_roundhouse_kick.draw(context,180,280,counter % 13)
-    sheet_ryu_shoryuken.draw(context,320,280,counter % 14)
-    sheet_ryu_hadoken.draw(context,460,280,counter % 12)
+    //sheet_ryu_shoryuken.draw(context,320,280,counter % 14)
+    //sheet_ryu_hadoken.draw(context,460,280,counter % 12)
+
+    now = new Date().getTime();
+    if(now - animate_start > 1000)
+        animate_start = now-1;
+
+    animation_ryu_hadoken.draw(context,460,280,animate_start,now)
+    animation_ryu_shoryuken.draw(context,320,280,animate_start,now)
+
+
 }
