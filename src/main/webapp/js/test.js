@@ -10,6 +10,13 @@ my_fighter.y = 150;
 
 var moving = 0;
 
+
+// setup gamepad
+
+gamepadSupport.init()
+
+//
+
 var fireballs = [];
 
 $(document).keydown(function(e){
@@ -84,8 +91,56 @@ switch(e.keyCode) {
 }
 });
 
+var ANALOG_BUTTON_THRESHOLD = .5;
+
+function checkGamePad() {
+    var gamepad = gamepadSupport.gamepads[0];
+
+    if (gamepad.buttons[2] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.light_punch();
+    else if (gamepad.buttons[3] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.medium_punch();
+    else if (gamepad.buttons[5] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.heavy_punch();
+
+    else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.light_kick();
+    else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.medium_kick();
+    else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.heavy_kick();
+
+    else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.special1();
+    else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD)
+        my_fighter.special2();
+
+    // crouching or standing or jumping
+    if (gamepad.axes[1] > 0.8)
+        my_fighter.duck();
+    else if (gamepad.axes[1] < -0.5) {
+        // TODO: proper jumping
+        if(gamepad.axes[0] > 0.5)
+            my_fighter.jump_forward();
+        else if(gamepad.axes[0] < -0.5)
+            my_fighter.jump_backward();
+        else
+            my_fighter.jump();
+    } else
+        my_fighter.stand();
+
+    // move
+    if (gamepad.axes[0] > 0.8)
+        my_fighter.dash_forward();
+    else if (gamepad.axes[0] < -0.8)
+        my_fighter.dash_backward();
+
+}
 
 function draw_handler() {
+    // TODO: proper animatino frame loop
+    checkGamePad();
+
     game_canvas.width = game_canvas.width;
 
     my_fighter.x = my_fighter.x % game_canvas.width;
