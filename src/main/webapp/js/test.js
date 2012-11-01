@@ -1,12 +1,14 @@
-var canvas = document.getElementById("main");
-var context = canvas.getContext("2d");
+var game_canvas = document.getElementById("main");
+var game_context = game_canvas.getContext("2d");
 
 sheet_ryu_idle.image_sheet.onload = function() {
                                       setInterval('draw_handler()', 75);
                                   };
 
 var my_fighter = new Fighter("ryu",ryu);
-my_fighter.y = 120;
+my_fighter.y = 160;
+
+var moving = 0;
 
 $(document).keydown(function(e){
 switch(e.keyCode) {
@@ -17,9 +19,13 @@ switch(e.keyCode) {
     case 68:
         //forwards
         my_fighter.dash_forward();
+        moving = 1;
         break;
     case 87:
-        my_fighter.jump();
+        if(moving == 1)
+            my_fighter.jump_forward();
+        else
+            my_fighter.jump();
         break;
     case 70:
         my_fighter.special1();
@@ -42,6 +48,7 @@ switch(e.keyCode) {
     case 68:
         //forwards
         my_fighter.stop();
+        moving = 0;
         break;
     case 83:
         my_fighter.stand();
@@ -51,9 +58,10 @@ switch(e.keyCode) {
 
 
 function draw_handler() {
-    canvas.width = canvas.width;
+    game_canvas.width = game_canvas.width;
 
-    my_fighter.x = my_fighter.x % canvas.width;
+    my_fighter.x = my_fighter.x % game_canvas.width;
 
-    my_fighter.render(canvas,context)
+    my_fighter.render(game_canvas,game_context)
+
 }
