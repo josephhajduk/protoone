@@ -14,21 +14,45 @@ $(document).keydown(function(e){
 switch(e.keyCode) {
     case 65:
         //backwards
+        moving = -1
         my_fighter.dash_backward();
         break;
     case 68:
         //forwards
-        my_fighter.dash_forward();
         moving = 1;
+        my_fighter.dash_forward();
         break;
     case 87:
         if(moving == 1)
             my_fighter.jump_forward();
+        else if(moving == -1)
+            my_fighter.jump_backward();
         else
             my_fighter.jump();
         break;
     case 70:
         my_fighter.special1();
+        break;
+    case 71:
+        my_fighter.special2();
+        break;
+    case 78:
+        my_fighter.light_punch();
+        break;
+    case 74:
+        my_fighter.medium_punch();
+        break;
+    case 73:
+        my_fighter.heavy_punch();
+        break;
+    case 77:
+        my_fighter.light_kick();
+        break;
+    case 75:
+        my_fighter.medium_kick();
+        break;
+    case 79:
+        my_fighter.heavy_kick();
         break;
     case 83:
         my_fighter.duck();
@@ -43,6 +67,7 @@ $(document).keyup(function(e){
 switch(e.keyCode) {
     case 65:
         //backwards
+        moving = 0;
         my_fighter.stop();
         break;
     case 68:
@@ -51,6 +76,7 @@ switch(e.keyCode) {
         moving = 0;
         break;
     case 83:
+        moving = 0;
         my_fighter.stand();
         break;
 }

@@ -9,6 +9,7 @@ function Animation (name, time_data, sprite_sheet) {
     this.name = name;
     this.time_data = time_data;
     this.sprite_sheet = sprite_sheet
+
     this.draw = function(context, x, y, start_time, now) {
         // time_data is how long each frame should be displayed in miliseconds
         // so [60,60,60,60,60] for most
