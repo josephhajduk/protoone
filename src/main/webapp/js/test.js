@@ -58,7 +58,7 @@ switch(e.keyCode) {
         my_fighter.duck();
         break;
     default:
-        alert(e.keyCode);
+        //alert(e.keyCode);
         break;
 }
 });
