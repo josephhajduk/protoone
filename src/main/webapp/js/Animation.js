@@ -29,6 +29,6 @@ function Animation (name, time_data, sprite_sheet) {
     }
 
     this.isFinishedAt = function(start_time,now) {
-        return (now - start_time > this.duration);
+        return ((now - start_time) > this.duration);
     }
 }
