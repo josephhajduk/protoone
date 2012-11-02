@@ -9,6 +9,29 @@ function Action (name, animation , movement_data, locking) {
         this.start_time = new Date().getTime();
     }
 
+    this.override_animation = null;
+    this.override_start_time = 0;
+
+    this.overrideAnimation = function(newAnimation) {
+        // don't override a override
+        if(this.override_start_time < this.start_time) {
+            this.override_animation = newAnimation;
+            this.override_start_time = new Date().getTime();
+            return true;
+        }
+            else return false;
+
+
+        /*
+        if(this.override_animation) {
+            if(!this.override_animation.isFinishedAt(this.override_start_time,new Date().getTime())) {
+                return false;
+            }
+        }
+        */
+
+    }
+
     this.get_position_delta = function(last,now) {
         var sumx = 0;
         var sumy = 0;
@@ -29,6 +52,11 @@ function Action (name, animation , movement_data, locking) {
     }
 
     this.render = function(context,x,y) {
+        if(this.override_animation) {
+            if(!this.override_animation.isFinishedAt(this.override_start_time,new Date().getTime()))
+                return this.override_animation.draw(context,x,y,this.override_start_time,new Date().getTime());
+        }
+
         return this.animation.draw(context,x,y,this.start_time,new Date().getTime());
     }
 

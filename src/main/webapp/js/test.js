@@ -66,13 +66,13 @@ switch(e.keyCode) {
         my_fighter.heavy_punch();
         break;
     case 77:
-        my_fighter.light_kick();
+        my_fighter.match_moves(["lk","k"])
         break;
     case 75:
-        my_fighter.medium_kick();
+        my_fighter.match_moves(["mk","k"])
         break;
     case 79:
-        my_fighter.heavy_kick();
+        my_fighter.match_moves(["hk","k"])
         break;
     case 83:
         my_fighter.duck();
@@ -118,14 +118,10 @@ function checkGamePad() {
 
         } else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.match_moves(["lk","k"])
-            my_fighter.light_kick();
         } else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.match_moves(["mk","k"])
-            my_fighter.medium_kick();
         } else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.match_moves(["hk","k"])
-            my_fighter.heavy_kick();
-
         } else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.special1();
         } else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD) {

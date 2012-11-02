@@ -11,6 +11,8 @@ function Fighter (name,fighter_def,ylock) {
 
     this.lastRender = new Date().getTime();
 
+    this.jumping = false;
+    this.crouching = false;
 
     this.do_action = function(new_action) {
         this.currentAction = new_action;
@@ -37,6 +39,7 @@ function Fighter (name,fighter_def,ylock) {
 
             this.currentAction.reset();
             this.y = ylock;
+            this.jumping = false;
         }
 
         // draw
@@ -82,18 +85,21 @@ function Fighter (name,fighter_def,ylock) {
             this.currentAction = this.fighter_def.duck;
             this.currentAction.reset();
             this.defaultAction = this.fighter_def.crouching;
+            this.crouching = true;
         }
     }
 
     this.stand = function() {
         // todo: reverse animation
         this.defaultAction = this.fighter_def.idle;
+        this.crouching = false;
     }
 
     this.jump_forward = function() {
         if(!this.currentAction.locking){
             this.currentAction = this.fighter_def.jump_forward;
             this.currentAction.reset();
+            this.jumping = true;
         }
     }
 
@@ -101,28 +107,24 @@ function Fighter (name,fighter_def,ylock) {
         if(!this.currentAction.locking){
             this.currentAction = this.fighter_def.jump_backward;
             this.currentAction.reset();
+            this.jumping = true;
         }
     }
 
     this.jump = function() {
-        //TODO: note works better to work this stuff out during the controls???
-        if(this.currentAction == this.fighter_def.dash_forward) {
-            this.jump_forward();
-        }
-
         if(!this.currentAction.locking){
             this.currentAction = this.fighter_def.jump_up;
             this.currentAction.reset();
+            this.jumping = true;
         }
     }
 
-    this.light_punch = function(){ this.doAction(this.fighter_def.light_punch) }
+    this.light_punch = function(){
+        this.doAction(this.fighter_def.light_punch)
+
+    }
     this.medium_punch = function(){ this.doAction(this.fighter_def.medium_punch) }
     this.heavy_punch = function(){ this.doAction(this.fighter_def.heavy_punch) }
-
-    this.light_kick = function(){ this.doAction(this.fighter_def.light_kick) }
-    this.medium_kick = function(){ this.doAction(this.fighter_def.medium_kick) }
-    this.heavy_kick = function(){ this.doAction(this.fighter_def.heavy_kick) }
 
     this.matching = []
     this.matching_names = []
@@ -153,6 +155,20 @@ function Fighter (name,fighter_def,ylock) {
         // check current moves
         for( var j = 0; j<this.matching.length; j++) {
             if(this.matching[j]) {
+
+                // if we have empty things here they are single button actions,  i hope they are always at the end cause we are pushing
+                if(this.matching[j][0][0].length == 0){
+                    console.log("final match:"+this.matching[j][0][1])
+
+                    var finalAction = this.matching[j][0][1];
+
+                    finalAction(this);
+
+                    this.matching = [];
+                    this.matching_names = [];
+
+                    return
+                }
 
                 // remove expired matching things
                 // will also move completed strings that didn't get ran because something of higher precedence got ran instead

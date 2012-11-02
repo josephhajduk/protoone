@@ -21,16 +21,82 @@ var sheet_ryu_roll = new SpriteSheet("ryu_roll","images/ryu_roll.png",384,224,9)
 var sheet_ryu_spinnthing = new SpriteSheet("ryu_spinnthing","images/ryu_spinnthing.png",384,224,16)
 var sheet_fireball = new SpriteSheet("fireball","images/hadoken2.png",84,50,2);
 
+var sheet_ryu_jumping_lk = new SpriteSheet("ryu_jumping_lk","images/ryu_jumping_down_light_kick.png",384,224,4);
+var sheet_ryu_crouching_lk = new SpriteSheet("ryu_crouching_lk","images/ryu_crouch_light_kick.png",384,224,6);
+
+var sheet_ryu_jumping_mk = new SpriteSheet("ryu_jumping_mk","images/ryu_jumping_down_medium_kick.png",384,224,9);
+var sheet_ryu_crouching_mk = new SpriteSheet("ryu_crouching_mk","images/ryu_crouch_medium_kick.png",384,224,6);
+
+var sheet_ryu_jumping_hk = new SpriteSheet("ryu_jumping_hk","images/ryu_jumping_down_heavy_kick.png",384,224,5);
+var sheet_ryu_crouching_hk = new SpriteSheet("ryu_crouching_hk","images/ryu_crouch_heavy_kick.png",384,224,10);
+
+
+var action_hadoken = new Action("ryu_hadoken",
+                                         new Animation("ryu_hadoken",simple_tdata(12,50),sheet_ryu_hadoken),
+                                         simple_tdata(12,[0,0]),
+                                         true
+                                 )
+
+var action_shoryuken = new Action("ryu_shoryuken",
+                                        new Animation("ryu_shoryuken",simple_tdata(14,50),sheet_ryu_shoryuken),
+                                        [[1,0],[1,-2],[1,-10],[1,-10],[1,-8],[1,-4],[1,-2],[1,2],[1,4],[1,6],[1,6],[1,6],[1,6],[1,6]],
+                                        true
+                                   )
+
+var action_kickspin = new Action("ryu_spinnthing",
+                                       new Animation("ryu_spinnthing",simple_tdata(16,75),sheet_ryu_spinnthing),
+                                       [[5,-2],[5,-2],[5,1],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,1],[5,2],[5,2]],
+                                       true
+                                  )
+
+var action_roll = new Action("ryu_roll_forward",
+                        new Animation("ryu_roll_forward",simple_tdata(9,75),sheet_ryu_roll),
+                        simple_tdata(9,[14,0]),
+                        true
+                    )
+
+var animation_jump_lk = new Animation("ryu_jumping_lk",simple_tdata(4,50),sheet_ryu_jumping_lk)
+var animation_jump_mk = new Animation("ryu_jumping_mk",simple_tdata(9,60),sheet_ryu_jumping_mk)
+var animation_jump_hk = new Animation("ryu_jumping_hk",simple_tdata(5,70),sheet_ryu_jumping_hk)
+
+var action_crouch_lk = new Action("ryu_crouch_light_kick",
+                             new Animation("ryu_crouch_light_kick",simple_tdata(6,60),sheet_ryu_crouching_lk),
+                             simple_tdata(6,[0,0]),
+                             true
+                         )
+var action_crouch_mk =  new Action("ryu_crouch_mk",
+                             new Animation("ryu_crouch_mkick",simple_tdata(6,70),sheet_ryu_crouching_mk),
+                             simple_tdata(6,[0,0]),
+                             true
+                         )
+var action_crouch_hk =  new Action("ryu_crouch_hk",
+                             new Animation("ryu_crouch_hkick",simple_tdata(10,80),sheet_ryu_crouching_hk),
+                             simple_tdata(10,[0,0]),
+                             true
+                         )
+
+var action_lk = new Action("ryu_light_kick",
+                     new Animation("ryu_light_kick",simple_tdata(7,50),sheet_ryu_light_kick),
+                     simple_tdata(7,[0,0]),
+                     true
+                 )
+
+var action_mk = new Action("ryu_medium_kick",
+                        new Animation("ryu_medium_kick",simple_tdata(6,50),sheet_ryu_medium_kick),
+                        simple_tdata(6,[0,0]),
+                        true
+                    )
+
+var action_hk = new Action("ryu_heavy_kick",
+                        new Animation("ryu_heavy_kick",simple_tdata(13,50),sheet_ryu_heavy_kick),
+                        simple_tdata(13,[0,0]),
+                        true
+                    )
+
 var move_hadoken = [
     [["d",0],["df",200],["f",200],["p",500]],
     function(fighter) {
-        fighter.doAction(
-            new Action("ryu_hadoken",
-                    new Animation("ryu_hadoken",simple_tdata(12,50),sheet_ryu_hadoken),
-                    simple_tdata(12,[0,0]),
-                    true
-            )
-        );
+        fighter.doAction(action_hadoken);
         fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
     },
     "hadoken"
@@ -39,13 +105,7 @@ var move_hadoken = [
 var move_shoryuken = [
     [["f",0],["d",200],["df",200],["p",500]],
     function(fighter) {
-        fighter.doAction(
-            new Action("ryu_shoryuken",
-                 new Animation("ryu_shoryuken",simple_tdata(14,50),sheet_ryu_shoryuken),
-                 [[1,0],[1,-2],[1,-10],[1,-10],[1,-8],[1,-4],[1,-2],[1,2],[1,4],[1,6],[1,6],[1,6],[1,6],[1,6]],
-                 true
-            )
-        )
+        fighter.doAction(action_shoryuken)
     },
     "shoryuken"
 ]
@@ -53,13 +113,7 @@ var move_shoryuken = [
 var move_spinnthing = [
     [["d",0],["db",200],["b",200],["k","500"]],
     function(fighter) {
-        fighter.doAction(
-            new Action("ryu_spinnthing",
-                 new Animation("ryu_spinnthing",simple_tdata(16,75),sheet_ryu_spinnthing),
-                 [[5,-2],[5,-2],[5,1],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,1],[5,2],[5,2]],
-                 true
-            )
-        )
+        fighter.doAction(action_kickspin)
     },
     "spinnthing"
 ]
@@ -67,15 +121,51 @@ var move_spinnthing = [
 var move_roll_forward = [
     [["d",0],["db",200],["b",200],["p","500"]],
     function(fighter) {
-        fighter.doAction(
-            new Action("ryu_roll_forward",
-                new Animation("ryu_roll_forward",simple_tdata(9,75),sheet_ryu_roll),
-                simple_tdata(9,[14,0]),
-                true
-            )
-        )
+        fighter.doAction(action_roll)
     },
     "roll_forward"
+]
+
+var move_light_kick = [
+    [["lk",0]],
+    function(fighter) {
+        if(fighter.jumping) {
+            fighter.currentAction.overrideAnimation(animation_jump_lk)
+        } else if (fighter.crouching) {
+            fighter.doAction(action_crouch_lk)
+        } else {
+            fighter.doAction(action_lk)
+        }
+    },
+    "light_kick"
+]
+
+var move_medium_kick = [
+    [["mk",0]],
+    function(fighter) {
+        if(fighter.jumping) {
+            fighter.currentAction.overrideAnimation(animation_jump_mk)
+        } else if (fighter.crouching) {
+            fighter.doAction(action_crouch_mk)
+        } else {
+            fighter.doAction(action_mk)
+        }
+    },
+    "medium_kick"
+]
+
+var move_heavy_kick = [
+    [["hk",0]],
+    function(fighter) {
+        if(fighter.jumping) {
+            fighter.currentAction.overrideAnimation(animation_jump_hk)
+        } else if (fighter.crouching) {
+            fighter.doAction(action_crouch_hk)
+        } else {
+            fighter.doAction(action_hk)
+        }
+    },
+    "heavy_kick"
 ]
 
 var ryu = {
@@ -153,24 +243,6 @@ var ryu = {
         true
     ),
 
-    light_kick : new Action("ryu_light_kick",
-        new Animation("ryu_light_kick",simple_tdata(7,50),sheet_ryu_light_kick),
-        simple_tdata(7,[0,0]),
-        false
-    ),
-
-    medium_kick : new Action("ryu_medium_kick",
-        new Animation("ryu_medium_kick",simple_tdata(6,50),sheet_ryu_medium_kick),
-        simple_tdata(6,[0,0]),
-        false
-    ),
-
-    heavy_kick : new Action("ryu_heavy_kick",
-        new Animation("ryu_heavy_kick",simple_tdata(13,50),sheet_ryu_heavy_kick),
-        simple_tdata(13,[0,0]),
-        true
-    ),
-
     bored : new Action("ryu_bored",
       new Animation("ryu_bored",simple_tdata(24,120),sheet_ryu_bored),
       simple_tdata(24,[0,0]),
@@ -181,6 +253,11 @@ var ryu = {
         move_hadoken,
         move_shoryuken,
         move_spinnthing,
-        move_roll_forward
+        move_roll_forward,
+
+                        // single button ones last
+        move_light_kick,
+        move_medium_kick,
+        move_heavy_kick
     ]
 }
