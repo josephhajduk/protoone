@@ -56,7 +56,9 @@ function Fighter (name,fighter_def,ylock) {
         if(this.currentAction != newAction && !this.currentAction.locking){
             this.currentAction = newAction;
             this.currentAction.reset();
+            return true;
         }
+        return false;
     }
 
     this.stop = function() {

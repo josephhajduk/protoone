@@ -215,8 +215,8 @@ var action_back_hk = new Action(
 var move_hadoken = [
     [["d",0],["df",300],["f",300],["p",500]],
     function(fighter) {
-        fighter.doAction(action_hadoken);
-        fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
+        if(fighter.doAction(action_hadoken))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
     },
     "hadoken"
 ]
