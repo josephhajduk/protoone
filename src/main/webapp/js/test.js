@@ -153,8 +153,10 @@ function checkGamePad() {
                 my_fighter.match_moves(["u"])
                 my_fighter.jump();
             }
-        } else
+        } else  {
+            my_fighter.match_moves(["o"])
             my_fighter.stand();
+        }
 
         // move
         if (gamepad.axes[0] > 0.8) {

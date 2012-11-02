@@ -135,6 +135,13 @@ function Fighter (name,fighter_def,ylock) {
         }
     }
 
+    this.roll_forward = function() {
+        if(this.currentAction != this.fighter_def.roll_forward && !this.currentAction.locking){
+            this.currentAction = this.fighter_def.roll_forward;
+            this.currentAction.reset();
+        }
+    }
+
     this.light_punch = function() {
         if(this.currentAction != this.fighter_def.light_punch && !this.currentAction.locking){
             this.currentAction = this.fighter_def.light_punch;

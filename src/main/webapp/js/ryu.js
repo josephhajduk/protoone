@@ -18,7 +18,9 @@ var sheet_ryu_shoryuken = new SpriteSheet("ryu_shoryuken","images/ryu_shoryuken.
 var sheet_ryu_hadoken = new SpriteSheet("ryu_hadoken","images/ryu_hadoken.png",384,224,12)
 var sheet_ryu_bored = new SpriteSheet("ryu_bored","images/ryu_long_pose.png",384,224,24)
 
-var sheet_ryu_spinnthing = new SpriteSheet("ryu_spinnthing","images/ryu_spinnthing.png",384,224,15)
+var sheet_ryu_roll = new SpriteSheet("ryu_roll","images/ryu_roll.png",384,224,9)
+
+var sheet_ryu_spinnthing = new SpriteSheet("ryu_spinnthing","images/ryu_spinnthing.png",384,224,16)
 
 var sheet_fireball = new SpriteSheet("fireball","images/hadoken2.png",84,50,2);
 
@@ -44,6 +46,14 @@ var move_spinnthing = [
         fighter.special3();
     },
     "spinnthing"
+]
+
+var move_roll_forward = [
+    [["f",0],["o",100],["f",100]],
+    function(fighter) {
+        fighter.roll_forward();
+    },
+    "roll_forward"
 ]
 
 var ryu = {
@@ -152,8 +162,14 @@ var ryu = {
     ),
 
     special3 : new Action("ryu_spinnthing",
-     new Animation("ryu_spinnthing",simple_tdata(15,75),sheet_ryu_spinnthing),
-     simple_tdata(15,[0,0]),
+     new Animation("ryu_spinnthing",simple_tdata(16,75),sheet_ryu_spinnthing),
+     [[5,-2],[5,-2],[5,1],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,1],[5,2],[5,2]],
+     true
+    ),
+
+    roll_forward : new Action("ryu_roll_forward",
+     new Animation("ryu_roll_forward",simple_tdata(9,75),sheet_ryu_roll),
+     simple_tdata(9,[14,0]),
      true
     ),
 
@@ -163,5 +179,5 @@ var ryu = {
       false
     ),
 
-    moves : [move_hadoken,move_shoryuken,move_spinnthing]
+    moves : [move_hadoken,move_shoryuken,move_spinnthing, move_roll_forward]
 }
