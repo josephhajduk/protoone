@@ -16,8 +16,13 @@ var sheet_ryu_medium_kick = new SpriteSheet("ryu_knee","images/ryu_knee.png",384
 var sheet_ryu_heavy_kick = new SpriteSheet("ryu_roundhouse_kick","images/ryu_roundhouse_kick.png",384,224,13)
 var sheet_ryu_shoryuken = new SpriteSheet("ryu_shoryuken","images/ryu_shoryuken.png",384,224,14)
 var sheet_ryu_hadoken = new SpriteSheet("ryu_hadoken","images/ryu_hadoken.png",384,224,12)
+var sheet_ryu_bored = new SpriteSheet("ryu_bored","images/ryu_long_pose.png",384,224,24)
 
 var sheet_fireball = new SpriteSheet("fireball","images/hadoken2.png",84,50,2);
+
+var move_lhadoken = ["d","df","f","lp"]
+var move_mhadoken = ["d","df","f","mp"]
+var move_hhadoken = ["d","df","f","hp"]
 
 var ryu = {
     idle : new Action("ryu_idle",
@@ -119,8 +124,14 @@ var ryu = {
     ),
 
     special2 : new Action("ryu_shoryuken",
-        new Animation("ryu_shoryuken",simple_tdata(14,50),sheet_ryu_shoryuken),
-        [[1,0],[1,-2],[1,-10],[1,-10],[1,-8],[1,-4],[1,-2],[1,2],[1,4],[1,6],[1,6],[1,6],[1,6],[1,6]],
-        true
+     new Animation("ryu_shoryuken",simple_tdata(14,50),sheet_ryu_shoryuken),
+     [[1,0],[1,-2],[1,-10],[1,-10],[1,-8],[1,-4],[1,-2],[1,2],[1,4],[1,6],[1,6],[1,6],[1,6],[1,6]],
+     true
+    ),
+
+    bored : new Action("ryu_bored",
+      new Animation("ryu_bored",simple_tdata(24,120),sheet_ryu_bored),
+      simple_tdata(24,[0,0]),
+      false
     )
 }

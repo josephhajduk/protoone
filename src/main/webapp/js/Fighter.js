@@ -17,6 +17,8 @@ function Fighter (name,fighter_def,ylock) {
         this.currentAction.reset();
     }
 
+    this.last_action = new Date().getTime();
+
     this.render = function(canvas,context) {
         // move
         positionDelta = this.currentAction.get_position_delta(this.lastRender,new Date().getTime())
@@ -24,7 +26,15 @@ function Fighter (name,fighter_def,ylock) {
         this.y += positionDelta.y;
 
         if(this.currentAction.isFinished()) {
-            this.currentAction = this.defaultAction;
+            // if the current action was idle,  restart our timer for bored pose
+            if(this.currentAction != this.fighter_def.idle)
+                this.last_action = new Date().getTime();
+
+            if(new Date().getTime() - this.last_action > 10000)
+                this.currentAction = this.fighter_def.bored;
+            else
+                this.currentAction = this.defaultAction;
+
             this.currentAction.reset();
             this.y = ylock;
         }
