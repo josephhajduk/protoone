@@ -213,7 +213,7 @@ var action_back_hk = new Action(
 )
 
 var move_hadoken = [
-    [["d",0],["df",200],["f",200],["p",500]],
+    [["d",0],["df",300],["f",300],["p",500]],
     function(fighter) {
         fighter.doAction(action_hadoken);
         fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
@@ -222,7 +222,7 @@ var move_hadoken = [
 ]
 
 var move_shoryuken = [
-    [["f",0],["d",200],["df",200],["p",500]],
+    [["f",0],["d",300],["df",350],["p",500]],
     function(fighter) {
         fighter.doAction(action_shoryuken)
     },
@@ -369,7 +369,7 @@ var move_jump_up = [
 ]
 
 var move_quick_forward = [
-    [["f",0],["ox",300],["f",300]],
+    [["f",0],["o",300],["f",300]],
     function(fighter) {
         fighter.doAction(action_move_quick_forward);
     },
@@ -377,7 +377,7 @@ var move_quick_forward = [
 ]
 
 var move_quick_backward = [
-    [["b",0],["ox",300],["b",300]],
+    [["b",0],["o",300],["b",300]],
     function(fighter) {
         fighter.doAction(action_move_quick_backward);
     },
@@ -433,8 +433,8 @@ var ryu = {
 
     moves : [
         // order with highest complexity higher,  matching is done in this order
-        move_hadoken,
         move_shoryuken,
+        move_hadoken,
         move_spinnthing,
         move_roll_forward,
         move_back_heavy_kick,

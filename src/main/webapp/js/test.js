@@ -144,17 +144,17 @@ function checkGamePad() {
 
         // crouching or standing or jumping
         if (gamepad.axes[1] > 0.8) {
-            if(gamepad.axes[0] > 0.5)
+            if(gamepad.axes[0] > 0.7)
                 my_fighter.match_moves(["df"])
-            else if(gamepad.axes[0] < -0.5)
+            else if(gamepad.axes[0] < -0.7)
                 my_fighter.match_moves(["db"])
             else
                 my_fighter.match_moves(["d"])
             my_fighter.duck();
-        } else if (gamepad.axes[1] < -0.5) {
+        } else if (gamepad.axes[1] < -0.7) {
             if(gamepad.axes[0] > 0.5) {
                 my_fighter.match_moves(["uf"])
-            } else if(gamepad.axes[0] < -0.5) {
+            } else if(gamepad.axes[0] < -0.7) {
                 my_fighter.match_moves(["ub"])
             } else {
                 my_fighter.match_moves(["u"])
@@ -173,6 +173,9 @@ function checkGamePad() {
             my_fighter.match_moves(["ox"])
             //my_fighter.stop();
         }
+
+        if (Math.abs(gamepad.axes[0]) < 0.5 && Math.abs(gamepad.axes[1]) < 0.5)
+            my_fighter.match_moves(["o"])
      }
 
 }
