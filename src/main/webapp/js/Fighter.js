@@ -21,7 +21,7 @@ function Fighter (name,fighter_def,ylock) {
 
     this.last_action = new Date().getTime();
 
-    this.render = function(canvas,context) {
+    this.render = function(context) {
         // move
         positionDelta = this.currentAction.get_position_delta(this.lastRender,new Date().getTime())
         this.x += positionDelta.x;
@@ -44,8 +44,8 @@ function Fighter (name,fighter_def,ylock) {
 
         // draw
         var result = this.currentAction.render(context,this.x,this.y)
-        this.currentAction.render(context,this.x-canvas.width,this.y)
-        this.currentAction.render(context,this.x+canvas.width,this.y)
+        //this.currentAction.render(context,this.x-canvas.width,this.y)
+        //this.currentAction.render(context,this.x+canvas.width,this.y)
         this.lastRender = new Date().getTime();
         return result;
     }
@@ -66,20 +66,6 @@ function Fighter (name,fighter_def,ylock) {
         }
     }
 
-    this.dash_forward = function() {
-        if(this.currentAction != this.fighter_def.dash_forward && !this.currentAction.locking) {
-            this.currentAction = this.fighter_def.dash_forward;
-            this.currentAction.reset();
-        }
-    }
-
-    this.dash_backward = function() {
-        if(this.currentAction != this.fighter_def.dash_backward && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.dash_backward;
-            this.currentAction.reset();
-        }
-    }
-
     this.duck = function() {
         if(this.currentAction != this.fighter_def.duck && this.currentAction != this.fighter_def.crouching && !this.currentAction.locking) {
             this.currentAction = this.fighter_def.duck;
@@ -95,30 +81,6 @@ function Fighter (name,fighter_def,ylock) {
         this.crouching = false;
     }
 
-    this.jump_forward = function() {
-        if(!this.currentAction.locking){
-            this.currentAction = this.fighter_def.jump_forward;
-            this.currentAction.reset();
-            this.jumping = true;
-        }
-    }
-
-    this.jump_backward = function() {
-        if(!this.currentAction.locking){
-            this.currentAction = this.fighter_def.jump_backward;
-            this.currentAction.reset();
-            this.jumping = true;
-        }
-    }
-
-    this.jump = function() {
-        if(!this.currentAction.locking){
-            this.currentAction = this.fighter_def.jump_up;
-            this.currentAction.reset();
-            this.jumping = true;
-        }
-    }
-
     this.light_punch = function(){
         this.doAction(this.fighter_def.light_punch)
 
@@ -130,7 +92,7 @@ function Fighter (name,fighter_def,ylock) {
     this.matching_names = []
 
     this.match_moves = function(act) {
-        console.log(act)
+        //console.log(act)
 
         var moves = this.fighter_def.moves
 
@@ -145,9 +107,9 @@ function Fighter (name,fighter_def,ylock) {
                     copy[0].shift()
                     this.matching.push([copy,new Date().getTime()])
                     this.matching_names.push(name);
-                    console.log("started: "+moves[i][0]+" which is:"+moves[i][1])
+                    //console.log("started: "+moves[i][0]+" which is:"+moves[i][1])
                 } else {
-                    console.log("already watching for: "+name)
+                    //console.log("already watching for: "+name)
                 }
             }
         }
@@ -158,14 +120,14 @@ function Fighter (name,fighter_def,ylock) {
 
                 // if we have empty things here they are single button actions,  i hope they are always at the end cause we are pushing
                 if(this.matching[j][0][0].length == 0){
-                    console.log("final match:"+this.matching[j][0][1])
+                    console.log("final match:"+this.matching[j][0][2])
 
                     var finalAction = this.matching[j][0][1];
 
                     finalAction(this);
-
-                    this.matching = [];
-                    this.matching_names = [];
+                    // don't stop matching when its a single button action
+                    this.matching_names.splice(this.matching_names.indexOf(this.matching[j][0][2]),1)
+                    this.matching.splice(j,1);
 
                     return
                 }
@@ -178,7 +140,7 @@ function Fighter (name,fighter_def,ylock) {
 
                 if(elapsed > timeWindow) {
                     var name = this.matching[j][2]
-                    console.log("removing: "+name)
+                    //console.log("removing: "+name)
                     this.matching_names.splice(this.matching_names.indexOf(name),1);
                     this.matching.splice(j,1)
                 } else {
@@ -193,12 +155,11 @@ function Fighter (name,fighter_def,ylock) {
                         // shift all the ones that match
                         if($.inArray(desiredKey,act) != -1) {
                             currentMatcher.shift();
-                            console.log("matched: "+this.matching[j][0][0]+" which is"+this.matching[j][0][1])
+                            //console.log("matched: "+this.matching[j][0][0]+" which is"+this.matching[j][0][1])
 
                             //if that was the last one go do the action
                             if(currentMatcher.length == 0) {
-                                console.log("final match:"+this.matching[j][0][1])
-
+                                console.log("final match:"+this.matching[j][0][2])
 
                                 var finalAction = this.matching[j][0][1];
 
