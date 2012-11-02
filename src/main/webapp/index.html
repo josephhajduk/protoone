@@ -1,48 +1,48 @@
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Protoone</title>
-    <STYLE type="text/css">
-        #main
-        {
-        position:absolute;
-        top: 50px;
-        left: 0px;
-        width: 1536px;
-        height: 860px;
-        }
+    <head>
+        <meta charset="utf-8">
+        <title>Protoone</title>
+        <style type="text/css">
+            #main {
+            position:absolute;
+            top: 50px;
+            left: 0px;
+            width: 1536px;
+            height: 860px;
+            }
 
-        #bg
-        {
-        position:absolute;
-        top: 130px;
-        left: 0px;
-        height: 500px;
-        width: 1536px;
-        }
+            #bg {
+            position:absolute;
+            top: 130px;
+            left: 0px;
+            height: 500px;
+            width: 1536px;
+            }
 
-        body
-        {
-        font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
-        }
-    </STYLE>
-</head>
-<body style="background:black">
-<center>
-    <p style="color:white"><em>move:</em> w,a,s,d <em>special:</em> f,g,j <em>punch:</em> n,j,i <em>kick:</em> m,k,o<br/>or use a <a href="http://www.html5rocks.com/en/tutorials/doodles/gamepad/">gamepad</a>! (tested with a ps3 controller in chrome)</p>
-    <p style="color:white"><em>most of ryu's moves work although they are hard to do with a keyboard</em></p>
-    <img id="bg" src="images/testbackground.gif"/>
-    <canvas id="main" width="768" height="480"></canvas>
-</center>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<script src="js/SpriteSheet.js"></script>
-<script src="js/Animation.js"></script>
-<script src="js/Action.js"></script>
-<script src="js/Fireball.js"></script>
-<script src="js/Fighter.js"></script>
-<script src="js/ryu.js"></script>
-<script src="js/Gamepad.js"></script>
-<script src="js/Control.js"></script>
-<script src="js/test.js"></script>
-</body>
+            body {
+            font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+            }
+        </style>
+    </head>
+    <body style="background:black">
+        <center>
+            <p style="color:white"><em>move:</em> w,a,s,d <em>special:</em> f,g,j <em>punch:</em> n,j,i <em>kick:</em> m,k,o<br/>or use a <a href="http://www.html5rocks.com/en/tutorials/doodles/gamepad/">gamepad</a>! (tested with a ps3 controller in chrome)</p>
+            <p style="color:white"><em>most of ryu's moves work although they are hard to do with a keyboard</em></p>
+            <img id="bg" src="images/testbackground.gif"/>
+            <canvas id="main" width="768" height="480"></canvas>
+        </center>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="js/SpriteSheet.js"></script>
+        <script src="js/Animation.js"></script>
+        <script src="js/Action.js"></script>
+        <script src="js/Fireball.js"></script>
+        <script src="js/Fighter.js"></script>
+        <script src="js/ryu_sprites.js"></script>
+        <script src="js/ryu_actions.js"></script>
+        <script src="js/ryu_moves.js"></script>
+        <script src="js/ryu.js"></script>
+        <script src="js/Gamepad.js"></script>
+        <script src="js/Control.js"></script>
+        <script src="js/test.js"></script>
+    </body>
 </html>
