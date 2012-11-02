@@ -105,44 +105,65 @@ function checkGamePad() {
     var gamepad = gamepadSupport.gamepads[0];
 
     if(gamepad) {
-        if (gamepad.buttons[2] > ANALOG_BUTTON_THRESHOLD)
+
+        if (gamepad.buttons[2] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["lp","p"])
             my_fighter.light_punch();
-        else if (gamepad.buttons[3] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[3] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["mp","p"])
             my_fighter.medium_punch();
-        else if (gamepad.buttons[5] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[5] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["hp","p"])
             my_fighter.heavy_punch();
 
-        else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[0] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["lk","k"])
             my_fighter.light_kick();
-        else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[1] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["mk","k"])
             my_fighter.medium_kick();
-        else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[7] > ANALOG_BUTTON_THRESHOLD) {
+            my_fighter.match_moves(["hk","k"])
             my_fighter.heavy_kick();
 
-        else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[4] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.special1();
-        else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD)
+        } else if (gamepad.buttons[6] > ANALOG_BUTTON_THRESHOLD) {
             my_fighter.special2();
+        }
 
         // crouching or standing or jumping
-        if (gamepad.axes[1] > 0.8)
-            my_fighter.duck();
-        else if (gamepad.axes[1] < -0.5) {
-            // TODO: proper jumping
+        if (gamepad.axes[1] > 0.8) {
             if(gamepad.axes[0] > 0.5)
-                my_fighter.jump_forward();
+                my_fighter.match_moves(["df"])
             else if(gamepad.axes[0] < -0.5)
-                my_fighter.jump_backward();
+                my_fighter.match_moves(["db"])
             else
+                my_fighter.match_moves(["d"])
+            my_fighter.duck();
+        } else if (gamepad.axes[1] < -0.5) {
+            // TODO: proper jumping
+            if(gamepad.axes[0] > 0.5) {
+                my_fighter.match_moves(["uf"])
+                my_fighter.jump_forward();
+            } else if(gamepad.axes[0] < -0.5) {
+                my_fighter.match_moves(["ub"])
+                my_fighter.jump_backward();
+            } else {
+                my_fighter.match_moves(["u"])
                 my_fighter.jump();
+            }
         } else
             my_fighter.stand();
 
         // move
-        if (gamepad.axes[0] > 0.8)
-            my_fighter.dash_forward();
-        else if (gamepad.axes[0] < -0.8)
-            my_fighter.dash_backward();
+        if (gamepad.axes[0] > 0.8) {
+             my_fighter.match_moves(["f"])
+             my_fighter.dash_forward();
+        } else if (gamepad.axes[0] < -0.8) {
+             my_fighter.match_moves(["b"])
+             my_fighter.dash_backward();
+        }
      }
 
 }

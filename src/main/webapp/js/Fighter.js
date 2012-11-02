@@ -169,4 +169,80 @@ function Fighter (name,fighter_def,ylock) {
             this.currentAction.reset();
         }
     }
+
+    this.matching = []
+    this.matching_names = []
+
+    this.match_moves = function(act) {
+        console.log(act)
+
+        var moves = this.fighter_def.moves
+
+        // add matching moves to array
+        for( var i = 0; i< moves.length; i++){
+            if($.inArray(moves[i][0][0][0], act) != -1){
+
+                var name = moves[i][2]
+                // make sure not already matching
+                if($.inArray(name,this.matching_names) == -1){
+                    var copy = $.extend(true, [], moves[i])
+                    copy[0].shift()
+                    this.matching.push([copy,new Date().getTime()])
+                    this.matching_names.push(name);
+                    console.log("started: "+moves[i][0]+" which is:"+moves[i][1])
+                } else {
+                    console.log("already watching for: "+name)
+                }
+            }
+        }
+
+        // check current moves
+        for( var j = 0; j<this.matching.length; j++) {
+            if(this.matching[j]) {
+
+                // remove expired matching things
+                // will also move completed strings that didn't get ran because something of higher precedence got ran instead
+                var elapsed = new Date().getTime() - this.matching[j][1];
+
+                var timeWindow = this.matching[j][0][0][0][1];
+
+                if(elapsed > timeWindow) {
+                    var name = this.matching[j][2]
+                    console.log("removing: "+name)
+                    this.matching_names.splice(this.matching_names.indexOf(name),1);
+                    this.matching.splice(j,1)
+                } else {
+
+                    for(var k = 0; k<this.matching[j][0].length; k++) {
+                        var currentMatcher = this.matching[j][0][0]
+
+                        var firstFromCurrentMatcher = currentMatcher[0]
+
+                        var desiredKey = firstFromCurrentMatcher[0]
+
+                        // shift all the ones that match
+                        if($.inArray(desiredKey,act) != -1) {
+                            currentMatcher.shift();
+                            console.log("matched: "+this.matching[j][0][0]+" which is"+this.matching[j][0][1])
+
+                            //if that was the last one go do the action
+                            if(currentMatcher.length == 0) {
+                                console.log("final match:"+this.matching[j][0][1])
+
+
+                                var finalAction = this.matching[j][0][1];
+
+                                finalAction(this);
+
+                                this.matching = [];
+                                this.matching_names = [];
+
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

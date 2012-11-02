@@ -20,9 +20,13 @@ var sheet_ryu_bored = new SpriteSheet("ryu_bored","images/ryu_long_pose.png",384
 
 var sheet_fireball = new SpriteSheet("fireball","images/hadoken2.png",84,50,2);
 
-var move_lhadoken = ["d","df","f","lp"]
-var move_mhadoken = ["d","df","f","mp"]
-var move_hhadoken = ["d","df","f","hp"]
+var move_hadoken = [
+    [["d",0],["df",200],["f",200],["p",500]],
+    function(fighter) {
+        fighter.special1();
+    },
+    "hadoken"
+]
 
 var ryu = {
     idle : new Action("ryu_idle",
@@ -133,5 +137,7 @@ var ryu = {
       new Animation("ryu_bored",simple_tdata(24,120),sheet_ryu_bored),
       simple_tdata(24,[0,0]),
       false
-    )
+    ),
+
+    moves : [move_hadoken]
 }
