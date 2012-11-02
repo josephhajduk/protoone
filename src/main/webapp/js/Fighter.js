@@ -49,6 +49,13 @@ function Fighter (name,fighter_def,ylock) {
 
     // ACTIONS
 
+    this.doAction = function(newAction) {
+        if(this.currentAction != newAction && !this.currentAction.locking){
+            this.currentAction = newAction;
+            this.currentAction.reset();
+        }
+    }
+
     this.stop = function() {
         if(!this.currentAction.locking) {
             this.currentAction = this.fighter_def.idle;
@@ -109,80 +116,13 @@ function Fighter (name,fighter_def,ylock) {
         }
     }
 
-    this.special1 = function() {
-        if(this.currentAction != this.fighter_def.special1 && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.special1;
-            this.currentAction.reset();
+    this.light_punch = function(){ this.doAction(this.fighter_def.light_punch) }
+    this.medium_punch = function(){ this.doAction(this.fighter_def.medium_punch) }
+    this.heavy_punch = function(){ this.doAction(this.fighter_def.heavy_punch) }
 
-            if(this.fighter_def == ryu){
-                fireballs.push(new Fireball(sheet_fireball,this.x+175,this.y+100,200,0))
-            }
-        }
-
-    }
-
-    this.special2 = function() {
-        if(this.currentAction != this.fighter_def.special2 && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.special2;
-            this.currentAction.reset();
-        }
-    }
-
-    this.special3 = function() {
-        if(this.currentAction != this.fighter_def.special3 && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.special3;
-            this.currentAction.reset();
-        }
-    }
-
-    this.roll_forward = function() {
-        if(this.currentAction != this.fighter_def.roll_forward && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.roll_forward;
-            this.currentAction.reset();
-        }
-    }
-
-    this.light_punch = function() {
-        if(this.currentAction != this.fighter_def.light_punch && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.light_punch;
-            this.currentAction.reset();
-        }
-    }
-
-    this.medium_punch = function() {
-        if(this.currentAction != this.fighter_def.medium_punch && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.medium_punch;
-            this.currentAction.reset();
-        }
-    }
-
-    this.heavy_punch = function() {
-        if(this.currentAction != this.fighter_def.heavy_punch && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.heavy_punch;
-            this.currentAction.reset();
-        }
-    }
-
-    this.light_kick = function() {
-        if(this.currentAction != this.fighter_def.light_kick && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.light_kick;
-            this.currentAction.reset();
-        }
-    }
-
-    this.medium_kick = function() {
-        if(this.currentAction != this.fighter_def.medium_kick && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.medium_kick;
-            this.currentAction.reset();
-        }
-    }
-
-    this.heavy_kick = function() {
-        if(this.currentAction != this.fighter_def.heavy_kick && !this.currentAction.locking){
-            this.currentAction = this.fighter_def.heavy_kick;
-            this.currentAction.reset();
-        }
-    }
+    this.light_kick = function(){ this.doAction(this.fighter_def.light_kick) }
+    this.medium_kick = function(){ this.doAction(this.fighter_def.medium_kick) }
+    this.heavy_kick = function(){ this.doAction(this.fighter_def.heavy_kick) }
 
     this.matching = []
     this.matching_names = []
