@@ -3,11 +3,11 @@ var move_super_hadoken = [
     [["b",0],["db",300],["d",300],["df",300],["f",300],["p",500]],
     function(fighter) {
         if(fighter.doAction(action_hadoken))
-            fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+60,200,0))
-            fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+80,200,0))
-            fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
-            fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+120,200,0))
-            fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+140,200,0))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+60,600,0))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+80,600,0))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,600,0))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+120,600,0))
+            fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+140,600,0))
     },
     "superhadoken"
 ]
