@@ -91,8 +91,17 @@ function Fighter (name,fighter_def,ylock) {
     this.matching = []
     this.matching_names = []
 
+    this.lastact = ""
+
     this.match_moves = function(act) {
-        //console.log(act)
+        if(String(act) != this.lastact
+        && String(act) != String(["ox"])
+        && String(act) != String(["oy"])
+        && String(act) != String(["o", "ox", "oy"])
+        ) {
+            console.log(act)
+            this.lastact = String(act);
+        }
 
         var moves = this.fighter_def.moves
 
@@ -120,7 +129,7 @@ function Fighter (name,fighter_def,ylock) {
 
                 // if we have empty things here they are single button actions,  i hope they are always at the end cause we are pushing
                 if(this.matching[j][0][0].length == 0){
-                    console.log("final match:"+this.matching[j][0][2])
+                    //console.log("final match:"+this.matching[j][0][2])
 
                     var finalAction = this.matching[j][0][1];
 
@@ -159,7 +168,7 @@ function Fighter (name,fighter_def,ylock) {
 
                             //if that was the last one go do the action
                             if(currentMatcher.length == 0) {
-                                console.log("final match:"+this.matching[j][0][2])
+                                console.log("triggered: "+this.matching[j][0][2])
 
                                 var finalAction = this.matching[j][0][1];
 
