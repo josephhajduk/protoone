@@ -1,3 +1,5 @@
+var SpriteSheets = []
+
 function SpriteSheet(name, image_sheet_url, sprite_width, sprite_height, sprite_length) {
     this.name = name;
     this.loaded=false;
@@ -18,6 +20,11 @@ function SpriteSheet(name, image_sheet_url, sprite_width, sprite_height, sprite_
             x, y,
             this.sprite_width,this.sprite_height);
     }
+
+    SpriteSheets.push({
+                           key:   this.name,
+                           value: this
+                       });
 }
 
 function ReverseSpriteSheet(name,oldSheet) {
@@ -26,6 +33,11 @@ function ReverseSpriteSheet(name,oldSheet) {
     this.draw = function(context, x, y, n) {
         this.oldSheet.draw(context,x,y,this.oldSheet.sprite_length-1-n)
     }
+
+    SpriteSheets.push({
+                        key:   this.name,
+                        value: this
+                      });
 }
 
 // TODO: inherit properly

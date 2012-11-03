@@ -1,200 +1,201 @@
 
-var move_super_hadoken = [
+var move_ryu_super_hadoken = [
     [["b",0],["db",300],["d",300],["df",300],["f",300],["p",500]],
     function(fighter) {
-        if(fighter.doAction(action_hadoken))
+        if(fighter.doAction(action_ryu_hadoken))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+60,600,0))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+80,600,0))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,600,0))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+155,fighter.y+120,600,0))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+125,fighter.y+140,600,0))
     },
-    "superhadoken"
+    "ryu_super_hadoken"
 ]
-var move_hadoken = [
+
+var move_ryu_hadoken = [
     [["d",0],["df",300],["f",300],["p",500]],
     function(fighter) {
-        if(fighter.doAction(action_hadoken))
+        if(fighter.doAction(action_ryu_hadoken))
             fireballs.push(new Fireball(sheet_fireball,fighter.x+175,fighter.y+100,200,0))
     },
-    "hadoken"
+    "ryu_hadoken"
 ]
 
-var move_shoryuken = [
+var move_ryu_shoryuken = [
     [["f",0],["d",300],["df",350],["p",500]],
     function(fighter) {
-        fighter.doAction(action_shoryuken)
+        fighter.doAction(action_ryu_shoryuken)
     },
-    "shoryuken"
+    "ryu_shoryuken"
 ]
 
-var move_spinnthing = [
+var move_ryu_spinnthing = [
     [["d",0],["db",200],["b",200],["k","500"]],
     function(fighter) {
-        fighter.doAction(action_kickspin)
+        fighter.doAction(action_ryu_kickspin)
     },
-    "spinnthing"
+    "ryu_spinnthing"
 ]
 
-var move_roll_forward = [
+var move_ryu_roll_forward = [
     [["d",0],["db",200],["b",200],["p","500"]],
     function(fighter) {
-        fighter.doAction(action_roll)
+        fighter.doAction(action_ryu_roll)
     },
-    "roll_forward"
+    "ryu_roll_forward"
 ]
 
-var move_light_punch = [
+var move_ryu_light_punch = [
     [["lp",0]],
     function(fighter) {
         if(fighter.jumping) {
             fighter.currentAction.overrideAnimation(animation_jump_lp)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_lp)
+            fighter.doAction(action_ryu_crouch_lp)
         } else {
-            fighter.doAction(action_lp)
+            fighter.doAction(action_ryu_lp)
         }
     },
-    "light_punch"
+    "ryu_light_punch"
 ]
 
-var move_medium_punch = [
+var move_ryu_medium_punch = [
     [["mp",0]],
     function(fighter) {
         if(fighter.jumping) {
             fighter.currentAction.overrideAnimation(animation_jump_mp)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_mp)
+            fighter.doAction(action_ryu_crouch_mp)
         } else {
-            fighter.doAction(action_mp)
+            fighter.doAction(action_ryu_mp)
         }
     },
-    "medium_punch"
+    "ryu_medium_punch"
 ]
 
-var move_heavy_punch = [
+var move_ryu_heavy_punch = [
     [["hp",0]],
     function(fighter) {
         if(fighter.jumping) {
             fighter.currentAction.overrideAnimation(animation_jump_hp)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_hp)
+            fighter.doAction(action_ryu_crouch_hp)
         } else {
-            fighter.doAction(action_hp)
+            fighter.doAction(action_ryu_hp)
         }
     },
-    "heavy_punch"
+    "ryu_heavy_punch"
 ]
 
-var move_light_kick = [
+var move_ryu_light_kick = [
     [["lk",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_lk)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_lk)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_lk)
+            fighter.doAction(action_ryu_crouch_lk)
         } else {
-            fighter.doAction(action_lk)
+            fighter.doAction(action_ryu_lk)
         }
     },
-    "light_kick"
+    "ryu_light_kick"
 ]
 
-var move_medium_kick = [
+var move_ryu_medium_kick = [
     [["mk",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_mk)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_mk)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_mk)
+            fighter.doAction(action_ryu_crouch_mk)
         } else {
-            fighter.doAction(action_mk)
+            fighter.doAction(action_ryu_mk)
         }
     },
-    "medium_kick"
+    "ryu_medium_kick"
 ]
 
-var move_heavy_kick = [
+var move_ryu_heavy_kick = [
     [["hk",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_hk)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_hk)
         } else if (fighter.crouching) {
-            fighter.doAction(action_crouch_hk)
+            fighter.doAction(action_ryu_crouch_hk)
         } else {
-            fighter.doAction(action_hk)
+            fighter.doAction(action_ryu_hk)
         }
     },
-    "heavy_kick"
+    "ryu_heavy_kick"
 ]
 
-var move_back_heavy_kick = [
+var move_ryu_back_heavy_kick = [
     [["b",0],["hk",100]],
     function(fighter) {
         if(fighter.jumping || fighter.crouching) {
             move_heavy_kick[1](fighter);
         } else {
-            fighter.doAction(action_back_hk)
+            fighter.doAction(action_ryu_back_hk)
         }
     },
-    "heavy_kick"
+    "ryu_back_heavy_kick"
 ]
 
-var move_jump_forward = [
+var move_ryu_jump_forward = [
     [["uf",0]],
     function(fighter) {
-        fighter.doAction(action_jump_forward);
+        fighter.doAction(action_ryu_jump_forward);
         fighter.jumping = true;
     },
-    "jump_forward"
+    "ryu_jump_forward"
 ]
 
-var move_jump_backward = [
+var move_ryu_jump_backward = [
     [["ub",0]],
     function(fighter) {
-        fighter.doAction(action_jump_backward);
+        fighter.doAction(action_ryu_jump_backward);
         fighter.jumping = true;
     },
-    "jump_forward"
+    "ryu_jump_backward"
 ]
 
-var move_jump_up = [
+var move_ryu_jump_up = [
     [["u",0]],
     function(fighter) {
-        fighter.doAction(action_jump_up);
+        fighter.doAction(action_ryu_jump_up);
         fighter.jumping = true;
     },
-    "jump_forward"
+    "ryu_jump_up"
 ]
 
-var move_quick_forward = [
+var move_ryu_dash_forward = [
     [["f",0],["o",300],["f",300]],
     function(fighter) {
-        fighter.doAction(action_move_quick_forward);
+        fighter.doAction(action_ryu_move_dash_forward);
     },
-    "quick_forward"
+    "ryu_dash_forward"
 ]
 
-var move_quick_backward = [
+var move_ryu_dash_backward = [
     [["b",0],["o",300],["b",300]],
     function(fighter) {
-        fighter.doAction(action_move_quick_backward);
+        fighter.doAction(action_ryu_move_dash_backward);
     },
-    "quick_backward"
+    "ryu_dash_backward"
 ]
 
-var move_forward = [
+var move_ryu_forward = [
     [["f",0]],
     function(fighter) {
-        fighter.doAction(action_move_forward);
+        fighter.doAction(action_ryu_move_forward);
     },
-    "forward"
+    "ryu_forward"
 ]
 
-var move_backward = [
+var move_ryu_backward = [
     [["b",0]],
     function(fighter) {
-        fighter.doAction(action_move_backward);
+        fighter.doAction(action_ryu_move_backward);
     },
-    "backward"
+    "ryu_backward"
 ]

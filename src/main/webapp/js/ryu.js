@@ -10,30 +10,30 @@ var ryu = {
 
     moves : [
         // order with highest complexity higher,  matching is done in this order
-        move_super_hadoken,
-        move_shoryuken,
-        move_hadoken,
-        move_spinnthing,
-        move_roll_forward,
-        move_back_heavy_kick,
+        move_ryu_super_hadoken,
+        move_ryu_shoryuken,
+        move_ryu_hadoken,
+        move_ryu_spinnthing,
+        move_ryu_roll_forward,
+        move_ryu_back_heavy_kick,
 
         // single button
-        move_light_kick,
-        move_medium_kick,
-        move_heavy_kick,
-        move_light_punch,
-        move_medium_punch,
-        move_heavy_punch,
+        move_ryu_light_kick,
+        move_ryu_medium_kick,
+        move_ryu_heavy_kick,
+        move_ryu_light_punch,
+        move_ryu_medium_punch,
+        move_ryu_heavy_punch,
 
         // complex movement
-        move_quick_forward,
-        move_quick_backward,
+        move_ryu_dash_forward,
+        move_ryu_dash_backward,
 
         // movements
-        move_jump_forward,
-        move_jump_backward,
-        move_jump_up,
-        move_forward,
-        move_backward
+        move_ryu_jump_forward,
+        move_ryu_jump_backward,
+        move_ryu_jump_up,
+        move_ryu_forward,
+        move_ryu_backward
     ]
 }

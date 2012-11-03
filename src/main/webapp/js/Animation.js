@@ -5,6 +5,8 @@ function simple_tdata(len,each) {
     return result;
 }
 
+var Animations = []
+
 function Animation (name, time_data, sprite_sheet) {
     this.name = name;
     this.time_data = time_data;
@@ -32,4 +34,9 @@ function Animation (name, time_data, sprite_sheet) {
     this.isFinishedAt = function(start_time,now) {
         return ((now - start_time) > this.duration);
     }
+
+    Animations.push({
+                       key:   this.name,
+                       value: this
+                   });
 }
