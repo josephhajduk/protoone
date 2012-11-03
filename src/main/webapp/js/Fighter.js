@@ -25,6 +25,8 @@ function Fighter (name,fighter_def,ylock) {
 
     this.last_action = new Date().getTime();
 
+
+    // NOTE:  does not do things like fireballs,  other entities need to be synced as well
     this.set_state = function(
         id,
         asof,
@@ -50,7 +52,7 @@ function Fighter (name,fighter_def,ylock) {
             this.jumping = jumping;
 
             this.currentAction = Actions[action]();
-            this.currentAction.start_time = asof;
+            this.currentAction.start_time = action_start_time;
 
             if(override_animation) {
                 //check for both override animation and override stat time
@@ -103,9 +105,12 @@ function Fighter (name,fighter_def,ylock) {
     // ACTIONS
 
     this.doAction = function(newAction) {
-        //if(this.currentAction != newAction && !this.currentAction.locking){
-        if(!this.currentAction.locking){
-            this.currentAction = newAction();
+
+        var newact = newAction();
+
+        if(this.currentAction.name != newact.name && !this.currentAction.locking){
+        //if(!this.currentAction.locking){
+            this.currentAction = newact;
             this.currentAction.reset();
             return true;
         }

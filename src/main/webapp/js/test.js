@@ -32,6 +32,7 @@ var my_fighter = new Fighter("ryu",ryu,100);
 var my_states = [];
 var last_pump = 0;
 var last_action = ""
+var lastovername = ""
 
 var second_fighter = new Fighter("ryu",ryu,100);
                     second_fighter.y = 100;
@@ -60,11 +61,15 @@ function game_handler() {
     //get players state
     //if(new Date().getTime() - last_pump > 250) {
     //if(true) {
-    if(my_fighter.currentAction.name != last_action) {
+    var override_action_name = ""
+    if(my_fighter.currentAction.override_animation)
+        override_action_name = my_fighter.currentAction.override_animation.name;
+
+    if(my_fighter.currentAction.name != last_action || override_action_name != lastovername) {
         var ovr = null;
         var ovrst = null;
 
-        if(my_fighter.currentAction.override_start_time != 0) {
+        if(my_fighter.currentAction.override_animation) {
             ovr = my_fighter.currentAction.override_animation.name;
             ovrst = my_fighter.currentAction.override_start_time;
         }
@@ -74,9 +79,9 @@ function game_handler() {
             my_fighter.x+150,
             my_fighter.y,
             my_fighter.currentAction.name,
-            my_fighter.currentAction.start_time,
+            my_fighter.currentAction.start_time+1000,
             ovr,
-            ovrst,
+            ovrst+1000,
             my_fighter.crouching,
             my_fighter.jumping
         ]
@@ -84,6 +89,8 @@ function game_handler() {
         my_states.push(cur_state);
         last_pump = new Date().getTime();
         last_action = my_fighter.currentAction.name;
+        lastovername =  override_action_name;
+
         console.log("STATE: "+cur_state)
     }
 
