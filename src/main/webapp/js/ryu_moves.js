@@ -49,7 +49,7 @@ var move_ryu_light_punch = [
     [["lp",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_lp)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_lp)
         } else if (fighter.crouching) {
             fighter.doAction(action_ryu_crouch_lp)
         } else {
@@ -63,7 +63,7 @@ var move_ryu_medium_punch = [
     [["mp",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_mp)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_mp)
         } else if (fighter.crouching) {
             fighter.doAction(action_ryu_crouch_mp)
         } else {
@@ -77,7 +77,7 @@ var move_ryu_heavy_punch = [
     [["hp",0]],
     function(fighter) {
         if(fighter.jumping) {
-            fighter.currentAction.overrideAnimation(animation_jump_hp)
+            fighter.currentAction.overrideAnimation(animation_ryu_jump_hp)
         } else if (fighter.crouching) {
             fighter.doAction(action_ryu_crouch_hp)
         } else {

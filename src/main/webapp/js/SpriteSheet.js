@@ -34,10 +34,7 @@ function ReverseSpriteSheet(name,oldSheet) {
         this.oldSheet.draw(context,x,y,this.oldSheet.sprite_length-1-n)
     }
 
-    SpriteSheets.push({
-                        key:   this.name,
-                        value: this
-                      });
+    SpriteSheets[this.name] = this
 }
 
 // TODO: inherit properly

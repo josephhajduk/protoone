@@ -1,5 +1,11 @@
 function Fighter (name,fighter_def,ylock) {
     this.name = name;
+
+    this.id = 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+                  var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                  return v.toString(16);
+              });
+
     this.fighter_def = fighter_def;
     this.ylock = ylock;
 
@@ -18,6 +24,43 @@ function Fighter (name,fighter_def,ylock) {
     this.crouching = false;
 
     this.last_action = new Date().getTime();
+
+    this.set_state = function(
+        id,
+        asof,
+        x,y,
+        action,
+        action_start_time,
+        override_animation,
+        override_start_time,
+        crouching,
+        jumping) {
+
+        // assert correct id
+        if(id != this.id)
+            console.log("set_state: ID assertion failure, found:"+id+" expected:"+this.id)
+        // make sure this isn't from the future
+        else if(asof > new Date().getTime())
+            console.log("set_state: ASOF implies time travel")
+        else {
+            this.x = x;
+            this.y = y;
+            this.lastRender = asof;
+            this.crouching = crouching;
+            this.jumping = jumping;
+
+            this.currentAction = Actions[action]();
+            this.currentAction.start_time = asof;
+
+            if(override_animation) {
+                //check for both override animation and override stat time
+                if(!override_start_time)
+                    console.log("set_state: Missing start time for override")
+                else
+                    this.currentAction.overrideAnimation(Animations[override_animation],override_start_time)
+            }
+        }
+    }
 
     this.render = function(context) {
         // move

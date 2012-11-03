@@ -29,6 +29,10 @@ var my_fighter = new Fighter("ryu",ryu,100);
                  my_fighter.y = 100;
                  my_fighter.name = "Ryu"
 
+var my_states = [];
+var last_pump = 0;
+var last_action = ""
+
 var second_fighter = new Fighter("ryu",ryu,100);
                     second_fighter.y = 100;
                     second_fighter.x = 178;
@@ -41,6 +45,68 @@ var fighters = [my_fighter];
 fighters.push(second_fighter);
 
 function game_handler() {
+    // test set state
+/*
+        id,
+        asof,
+        x,y,
+        action,
+        action_start_time,
+        override_animation,
+        override_start_time,
+        crouching,
+        jumping
+*/
+    //get players state
+    //if(new Date().getTime() - last_pump > 250) {
+    //if(true) {
+    if(my_fighter.currentAction.name != last_action) {
+        var ovr = null;
+        var ovrst = null;
+
+        if(my_fighter.currentAction.override_start_time != 0) {
+            ovr = my_fighter.currentAction.override_animation.name;
+            ovrst = my_fighter.currentAction.override_start_time;
+        }
+
+        var cur_state = [
+            new Date().getTime()+1000,
+            my_fighter.x+150,
+            my_fighter.y,
+            my_fighter.currentAction.name,
+            my_fighter.currentAction.start_time,
+            ovr,
+            ovrst,
+            my_fighter.crouching,
+            my_fighter.jumping
+        ]
+
+        my_states.push(cur_state);
+        last_pump = new Date().getTime();
+        last_action = my_fighter.currentAction.name;
+        console.log("STATE: "+cur_state)
+    }
+
+    if(my_states[0]) {
+        if(my_states[0][0] - new Date().getTime() < 0) {
+            second_fighter.set_state(
+                second_fighter.id,
+                my_states[0][0],
+                my_states[0][1],
+                my_states[0][2],
+                my_states[0][3],
+                my_states[0][4],
+                my_states[0][5],
+                my_states[0][6],
+                my_states[0][7],
+                my_states[0][8]
+            )
+            my_states.shift();
+        }
+    }
+
+
+
     // request next frame
     requestAnimFrame(function() {
               game_handler();

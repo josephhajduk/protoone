@@ -1,3 +1,6 @@
+
+var Actions = []
+
 function Action (name, animation , movement_data, locking) {
     this.name = name;
     this.animation = animation;
@@ -12,11 +15,16 @@ function Action (name, animation , movement_data, locking) {
     this.override_animation = null;
     this.override_start_time = 0;
 
-    this.overrideAnimation = function(newAnimation) {
+    this.overrideAnimation = function(newAnimation,start_time) {
         // don't override a override
         if(this.override_start_time < this.start_time) {
             this.override_animation = newAnimation;
-            this.override_start_time = new Date().getTime();
+
+            if(start_time)
+                this.override_start_time = start_time
+            else
+                this.override_start_time = new Date().getTime();
+
             return true;
         }
             else return false;

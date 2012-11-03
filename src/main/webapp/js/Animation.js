@@ -35,8 +35,5 @@ function Animation (name, time_data, sprite_sheet) {
         return ((now - start_time) > this.duration);
     }
 
-    Animations.push({
-                       key:   this.name,
-                       value: this
-                   });
+    Animations[this.name] = this
 }
