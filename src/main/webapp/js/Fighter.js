@@ -9,18 +9,13 @@ function Fighter (name,fighter_def,ylock) {
     this.x = 0;
     this.y = 0;
 
-    this.currentAction = this.fighter_def.idle;
-    this.defaultAction = this.fighter_def.idle;
+    this.currentAction = this.fighter_def.idle();
+    this.defaultAction = this.fighter_def.idle();
 
     this.lastRender = new Date().getTime();
 
     this.jumping = false;
     this.crouching = false;
-
-    this.do_action = function(new_action) {
-        this.currentAction = new_action;
-        this.currentAction.reset();
-    }
 
     this.last_action = new Date().getTime();
 
@@ -36,7 +31,7 @@ function Fighter (name,fighter_def,ylock) {
                 this.last_action = new Date().getTime();
 
             if(new Date().getTime() - this.last_action > 10000)
-                this.currentAction = this.fighter_def.bored;
+                this.currentAction = this.fighter_def.bored();
             else
                 this.currentAction = this.defaultAction;
 
@@ -65,8 +60,9 @@ function Fighter (name,fighter_def,ylock) {
     // ACTIONS
 
     this.doAction = function(newAction) {
-        if(this.currentAction != newAction && !this.currentAction.locking){
-            this.currentAction = newAction;
+        //if(this.currentAction != newAction && !this.currentAction.locking){
+        if(!this.currentAction.locking){
+            this.currentAction = newAction();
             this.currentAction.reset();
             return true;
         }
@@ -75,32 +71,24 @@ function Fighter (name,fighter_def,ylock) {
 
     this.stop = function() {
         if(!this.currentAction.locking) {
-            this.currentAction = this.fighter_def.idle;
+            this.currentAction = this.fighter_def.idle();
             this.currentAction.reset();
         }
     }
 
     this.duck = function() {
-        if(this.currentAction != this.fighter_def.duck && this.currentAction != this.fighter_def.crouching && !this.currentAction.locking) {
-            this.currentAction = this.fighter_def.duck;
+        if(!this.crouching && !this.currentAction.locking) {
+            this.currentAction = this.fighter_def.duck();
             this.currentAction.reset();
-            this.defaultAction = this.fighter_def.crouching;
+            this.defaultAction = this.fighter_def.crouching();
             this.crouching = true;
         }
     }
 
     this.stand = function() {
-        // todo: reverse animation
-        this.defaultAction = this.fighter_def.idle;
+        this.defaultAction = this.fighter_def.idle();
         this.crouching = false;
     }
-
-    this.light_punch = function(){
-        this.doAction(this.fighter_def.light_punch)
-
-    }
-    this.medium_punch = function(){ this.doAction(this.fighter_def.medium_punch) }
-    this.heavy_punch = function(){ this.doAction(this.fighter_def.heavy_punch) }
 
     this.matching = []
     this.matching_names = []
