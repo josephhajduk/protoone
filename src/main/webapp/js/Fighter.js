@@ -3,6 +3,9 @@ function Fighter (name,fighter_def,ylock) {
     this.fighter_def = fighter_def;
     this.ylock = ylock;
 
+    this.name = "";
+    this.nameStyle = '#33CCFF';
+
     this.x = 0;
     this.y = 0;
 
@@ -42,11 +45,20 @@ function Fighter (name,fighter_def,ylock) {
             this.jumping = false;
         }
 
+
         // draw
         var result = this.currentAction.render(context,this.x,this.y)
         //this.currentAction.render(context,this.x-canvas.width,this.y)
         //this.currentAction.render(context,this.x+canvas.width,this.y)
         this.lastRender = new Date().getTime();
+
+        //draw name:
+        context.fillStyle    = this.nameStyle;
+        context.textAlign = 'center';
+        context.textBaseline = 'top';
+        context.font         = 'bold 12px sans-serif';
+        context.fillText(this.name, this.x+this.fighter_def.name_offset_x, this.y+this.fighter_def.name_offset_y);
+
         return result;
     }
 

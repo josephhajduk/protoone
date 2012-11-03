@@ -1,4 +1,9 @@
 var ryu = {
+
+    name_offset_x: 182,
+    name_offset_y: 50,
+
+
     idle : action_ryu_idle,
     duck : action_ryu_duck,
     crouching : action_ryu_crouching,
