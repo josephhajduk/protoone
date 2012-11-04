@@ -45,9 +45,12 @@ class fighterstateupdate {
 
   def send = <script>function sendUpdate(id,name,asof,x,y,currentAction,currentAction_startTime,override_animation,override_startTime,crouching,jumping){{
     var cur_state = [id,name,asof,x,y,currentAction,currentAction_startTime,override_animation,override_startTime,jumping,crouching]
-    console.log("SENDSTATE: "+cur_state);
-    {SHtml.jsonCall(JsRaw("cur_state"),processUpdate(_))}
+    // don't send idle cause it will happen naturally?
+    if(currentAction != "ryu_idle") {{
+      console.log("SENDSTATE: "+cur_state);
+      {SHtml.jsonCall(JsRaw("cur_state"),processUpdate(_))}
     }}
+}}
 
     </script>
 
@@ -69,7 +72,7 @@ var last_time_sync = 0;
 var last_server_offsets = [];
 syncTime();
 
-setInterval(syncTime,100);
+setInterval(syncTime,2000);
 
 function getOffset() {{
 

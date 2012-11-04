@@ -5,22 +5,28 @@ function syncTime() {
   var r = new XMLHttpRequest();
   var start = (new Date).getTime();
 
-  r.open('HEAD', document.location+"nothing", false);
+  r.open('GET', document.location+"time", false);
   r.onreadystatechange = function(){
     if (r.readyState != 4) {
       return;
     }
-
     var latency = (new Date).getTime() - start;
+           /*
     var timestring = r.getResponseHeader("DATE");
+
+    // double date header fix
+    timestring = timestring.substring(0,timestring.indexOf("GMT")+3);
 
     // Set the time to the **slightly old** date sent from the
     // server, then adjust it to a good estimate of what the
     // server time is **right now**.
     var systemtime = new Date(timestring);
     systemtime.setMilliseconds(systemtime.getMilliseconds() + (latency / 2))
+                                  */
 
-    var calc_offset = systemtime.getTime() - new Date().getTime() + 500; // -500 is baseline from client to server on same machine
+    var calc_offset = parseInt(r.response) + (latency/2) - new Date().getTime();
+
+    //var calc_offset = systemtime.getTime() - new Date().getTime() + 500; // -500 is baseline from client to server on same machine
 
     //console.log("S:"+timestring);
 

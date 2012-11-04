@@ -69,7 +69,7 @@ function game_handler() {
         override_action_name = my_fighter.currentAction.override_animation.name;
 
     if(my_fighter.currentAction.name != last_action || override_action_name != lastovername) {
-        console.log("SENDING")
+        //console.log("SENDING")
         var ovr = null;
         var ovrst = null;
 
