@@ -19,11 +19,12 @@ import net.liftweb.http.js.jquery._
 class Boot {
   def boot {
     // where to search snippet
-    LiftRules.addToPackages("code")
+    LiftRules.addToPackages("solidys.sf")
 
     // Build SiteMap
     val entries = List(
       Menu.i("Home") / "index", // the simple way to declare a menu
+      Menu.i("Nothing") / "nothing",
 
       // more complex because this menu allows anything in the
       // /static path to be visible

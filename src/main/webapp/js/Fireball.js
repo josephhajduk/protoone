@@ -5,11 +5,11 @@ function Fireball(sprite_sheet,start_x,start_y,vel_x,vel_y) {
     this.vel_x = vel_x;
     this.vel_y = vel_y;
 
-    this.launch_time = new Date().getTime();
+    this.launch_time = getTime();
 
     this.render = function(context) {
 
-        var elapsed = new Date().getTime();
+        var elapsed = getTime();
 
         var i = 1;
 

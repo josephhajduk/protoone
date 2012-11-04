@@ -29,91 +29,72 @@ var my_fighter = new Fighter("ryu",ryu,100);
                  my_fighter.y = 100;
                  my_fighter.name = "Ryu"
 
-var my_states = [];
-var last_pump = 0;
 var last_action = ""
 var lastovername = ""
 
-var second_fighter = new Fighter("ryu",ryu,100);
-                    second_fighter.y = 100;
-                    second_fighter.x = 178;
-                    second_fighter.name = "Ryu2";
-                    second_fighter.nameStyle = "#FFFFCC";
+
+var server_time_diff = 3500;
+
 
 var fireballs = [];
 
 var fighters = [my_fighter];
-fighters.push(second_fighter);
+
+function register_fighter(id) {
+    // if its not me
+    if(id != my_fighter.id) {
+
+        // make sure its not already registered
+        var found = false;
+        for(var i = 0; i<fighters.length; i++) {
+            if(fighters[i].id == id)
+                return fighters[i];
+        }
+
+        if(!found) {
+            var newFighter = new Fighter(id,ryu,100)
+            newFighter.y = 100;
+            newFighter.id = id;
+            newFighter.name = id;
+            fighters.push(newFighter);
+            return newFighter;
+        }
+    }
+}
 
 function game_handler() {
-    // test set state
-/*
-        id,
-        asof,
-        x,y,
-        action,
-        action_start_time,
-        override_animation,
-        override_start_time,
-        crouching,
-        jumping
-*/
-    //get players state
-    //if(new Date().getTime() - last_pump > 250) {
-    //if(true) {
+
     var override_action_name = ""
     if(my_fighter.currentAction.override_animation)
         override_action_name = my_fighter.currentAction.override_animation.name;
 
     if(my_fighter.currentAction.name != last_action || override_action_name != lastovername) {
+        console.log("SENDING")
         var ovr = null;
         var ovrst = null;
 
         if(my_fighter.currentAction.override_animation) {
             ovr = my_fighter.currentAction.override_animation.name;
-            ovrst = my_fighter.currentAction.override_start_time;
+            ovrst = my_fighter.currentAction.override_start_time+getOffset();
         }
 
-        var cur_state = [
-            new Date().getTime()+1000,
-            my_fighter.x+150,
-            my_fighter.y,
-            my_fighter.currentAction.name,
-            my_fighter.currentAction.start_time+1000,
-            ovr,
-            ovrst+1000,
-            my_fighter.crouching,
-            my_fighter.jumping
-        ]
-
-        my_states.push(cur_state);
-        last_pump = new Date().getTime();
         last_action = my_fighter.currentAction.name;
         lastovername =  override_action_name;
 
-        console.log("STATE: "+cur_state)
+        sendUpdate(
+           my_fighter.id,
+           my_fighter.name,
+           getTime()+getOffset(),
+           my_fighter.x,
+           my_fighter.y,
+           my_fighter.currentAction.name,
+           my_fighter.currentAction.start_time+getOffset(),
+           ovr,
+           ovrst,
+           my_fighter.crouching,
+           my_fighter.jumping
+        )
     }
-
-    if(my_states[0]) {
-        if(my_states[0][0] - new Date().getTime() < 0) {
-            second_fighter.set_state(
-                second_fighter.id,
-                my_states[0][0],
-                my_states[0][1],
-                my_states[0][2],
-                my_states[0][3],
-                my_states[0][4],
-                my_states[0][5],
-                my_states[0][6],
-                my_states[0][7],
-                my_states[0][8]
-            )
-            my_states.shift();
-        }
-    }
-
-
-
     // request next frame
     requestAnimFrame(function() {
               game_handler();

@@ -133,7 +133,7 @@ var move_ryu_back_heavy_kick = [
     [["b",0],["hk",100]],
     function(fighter) {
         if(fighter.jumping || fighter.crouching) {
-            move_heavy_kick[1](fighter);
+            move_ryu_heavy_kick[1](fighter);
         } else {
             fighter.doAction(action_ryu_back_hk)
         }

@@ -18,17 +18,18 @@ function Fighter (name,fighter_def,ylock) {
     this.currentAction = this.fighter_def.idle();
     this.defaultAction = this.fighter_def.idle();
 
-    this.lastRender = new Date().getTime();
+    this.lastRender = getTime();
 
     this.jumping = false;
     this.crouching = false;
 
-    this.last_action = new Date().getTime();
+    this.last_action = getTime();
 
 
     // NOTE:  does not do things like fireballs,  other entities need to be synced as well
     this.set_state = function(
         id,
+        name,
         asof,
         x,y,
         action,
@@ -38,44 +39,53 @@ function Fighter (name,fighter_def,ylock) {
         crouching,
         jumping) {
 
+        var now = getTime();
+
+        this.name = name;
+
+        var offset = getOffset();
+
+        // doesn't work
+        var lagbuffer = 0;
+
         // assert correct id
         if(id != this.id)
             console.log("set_state: ID assertion failure, found:"+id+" expected:"+this.id)
         // make sure this isn't from the future
-        else if(asof > new Date().getTime())
-            console.log("set_state: ASOF implies time travel")
+        else if(asof-(offset+1000) > now)
+            console.log("set_state: ASOF implies time travel :"+asof+"-"+now+"="+(asof-now)+", offset:"+offset)
         else {
             this.x = x;
             this.y = y;
-            this.lastRender = asof;
+            this.lastRender = asof-offset+lagbuffer;
             this.crouching = crouching;
             this.jumping = jumping;
 
             this.currentAction = Actions[action]();
-            this.currentAction.start_time = action_start_time;
+            this.currentAction.start_time = action_start_time-offset+lagbuffer;
 
             if(override_animation) {
                 //check for both override animation and override stat time
                 if(!override_start_time)
                     console.log("set_state: Missing start time for override")
                 else
-                    this.currentAction.overrideAnimation(Animations[override_animation],override_start_time)
+                    this.currentAction.overrideAnimation(Animations[override_animation],override_start_time-offset+lagbuffer)
             }
         }
     }
 
     this.render = function(context) {
         // move
-        positionDelta = this.currentAction.get_position_delta(this.lastRender,new Date().getTime())
+        positionDelta = this.currentAction.get_position_delta(this.lastRender,getTime())
         this.x += positionDelta.x;
         this.y += positionDelta.y;
 
         if(this.currentAction.isFinished()) {
             // if the current action was idle,  restart our timer for bored pose
             if(this.currentAction != this.fighter_def.idle)
-                this.last_action = new Date().getTime();
+                this.last_action = getTime();
 
-            if(new Date().getTime() - this.last_action > 10000)
+            if(getTime() - this.last_action > 10000)
                 this.currentAction = this.fighter_def.bored();
             else
                 this.currentAction = this.defaultAction;
@@ -90,7 +100,7 @@ function Fighter (name,fighter_def,ylock) {
         var result = this.currentAction.render(context,this.x,this.y)
         //this.currentAction.render(context,this.x-canvas.width,this.y)
         //this.currentAction.render(context,this.x+canvas.width,this.y)
-        this.lastRender = new Date().getTime();
+        this.lastRender = getTime();
 
         //draw name:
         context.fillStyle    = this.nameStyle;
@@ -149,7 +159,7 @@ function Fighter (name,fighter_def,ylock) {
         && String(act) != String(["oy"])
         && String(act) != String(["o", "ox", "oy"])
         ) {
-            console.log(act)
+            console.log("INPUT: "+act)
             this.lastact = String(act);
         }
 
@@ -164,7 +174,7 @@ function Fighter (name,fighter_def,ylock) {
                 if($.inArray(name,this.matching_names) == -1){
                     var copy = $.extend(true, [], moves[i])
                     copy[0].shift()
-                    this.matching.push([copy,new Date().getTime()])
+                    this.matching.push([copy,getTime()])
                     this.matching_names.push(name);
                     //console.log("started: "+moves[i][0]+" which is:"+moves[i][1])
                 } else {
@@ -193,7 +203,7 @@ function Fighter (name,fighter_def,ylock) {
 
                 // remove expired matching things
                 // will also move completed strings that didn't get ran because something of higher precedence got ran instead
-                var elapsed = new Date().getTime() - this.matching[j][1];
+                var elapsed = getTime() - this.matching[j][1];
 
                 var timeWindow = this.matching[j][0][0][0][1];
 

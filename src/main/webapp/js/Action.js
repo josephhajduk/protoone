@@ -5,11 +5,11 @@ function Action (name, animation , movement_data, locking) {
     this.name = name;
     this.animation = animation;
     this.movement_data = movement_data;
-    this.start_time = new Date().getTime();
+    this.start_time = getTime();
     this.locking = locking;
 
     this.reset = function() {
-        this.start_time = new Date().getTime();
+        this.start_time = getTime();
     }
 
     this.override_animation = null;
@@ -23,7 +23,7 @@ function Action (name, animation , movement_data, locking) {
             if(start_time)
                 this.override_start_time = start_time
             else
-                this.override_start_time = new Date().getTime();
+                this.override_start_time = getTime();
 
             return true;
         }
@@ -32,7 +32,7 @@ function Action (name, animation , movement_data, locking) {
 
         /*
         if(this.override_animation) {
-            if(!this.override_animation.isFinishedAt(this.override_start_time,new Date().getTime())) {
+            if(!this.override_animation.isFinishedAt(this.override_start_time,getTime())) {
                 return false;
             }
         }
@@ -61,14 +61,14 @@ function Action (name, animation , movement_data, locking) {
 
     this.render = function(context,x,y) {
         if(this.override_animation) {
-            if(!this.override_animation.isFinishedAt(this.override_start_time,new Date().getTime()))
-                return this.override_animation.draw(context,x,y,this.override_start_time,new Date().getTime());
+            if(!this.override_animation.isFinishedAt(this.override_start_time,getTime()))
+                return this.override_animation.draw(context,x,y,this.override_start_time,getTime());
         }
 
-        return this.animation.draw(context,x,y,this.start_time,new Date().getTime());
+        return this.animation.draw(context,x,y,this.start_time,getTime());
     }
 
     this.isFinished = function() {
-        return this.animation.isFinishedAt(this.start_time,new Date().getTime());
+        return this.animation.isFinishedAt(this.start_time,getTime());
     }
 }
